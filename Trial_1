@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sports Roster Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      padding: 12px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+    th {
+      background-color: #f4f4f4;
+    }
+    button {
+      padding: 6px 12px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    .report {
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🏆 Sports Roster Dashboard</h1>
+
+  <table id="rosterTable">
+    <thead>
+      <tr>
+        <th>Organizer</th>
+        <th>Sport</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Join</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Praveen Panna</td>
+        <td>Football</td>
+        <td>2025-06-28</td>
+        <td>17:00</td>
+        <td><button onclick="joinEvent(this)">Join</button></td>
+      </tr>
+      <tr>
+        <td>Praveen Panna</td>
+        <td>Badminton</td>
+        <td>2025-06-29</td>
+        <td>10:00</td>
+        <td><button onclick="joinEvent(this)">Join</button></td>
+      </tr>
+      <tr>
+        <td>Praveen Panna</td>
+        <td>Volleyball</td>
+        <td>2025-07-01</td>
+        <td>18:30</td>
+        <td><button onclick="joinEvent(this)">Join</button></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="report">
+    <h2>📊 Participation Report</h2>
+    <ul id="reportList"></ul>
+  </div>
+
+  <script>
+    const reportData = {};
+
+    function joinEvent(button) {
+      const row = button.parentElement.parentElement;
+      const sport = row.cells[1].innerText;
+      const date = row.cells[2].innerText;
+      const time = row.cells[3].innerText;
+      const key = `${sport} | ${date} | ${time}`;
+
+      const name = prompt("Enter your name to join:");
+      if (!name) return;
+
+      if (!reportData[key]) {
+        reportData[key] = [];
+      }
+
+      if (!reportData[key].includes(name)) {
+        reportData[key].push(name);
+        updateReport();
+      } else {
+        alert("You have already joined this event.");
+      }
+    }
+
+    function updateReport() {
+      const reportList = document.getElementById("reportList");
+      reportList.innerHTML = "";
+
+      for (const key in reportData) {
+        const participants = reportData[key].join(", ");
+        const li = document.createElement("li");
+        li.textContent = `${key} → Participants: ${participants}`;
+        reportList.appendChild(li);
+      }
+    }
+  </script>
+
+</body>
+</html>
